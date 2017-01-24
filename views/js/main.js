@@ -421,9 +421,9 @@ var resizePizzas = function (size) {
 
     changeSliderLabel(size);
 
-    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-
     // Iterates through pizza elements on the page and changes their widths
+
+    //Directly set the width instead of get sum on the basis of current width
     function changePizzaSizes(size) {
         var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
         var length = document.querySelectorAll(".randomPizzaContainer").length;
@@ -492,6 +492,7 @@ function updatePositions() {
     window.performance.mark("mark_start_frame");
 
     var items = document.querySelectorAll('.mover');
+    //calculate scrollTop and length outside the loop
     var length = items.length;
     var scrollTop = document.body.scrollTop;
     for (var i = 0; i < length; i++) {
@@ -513,8 +514,10 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function () {
+    //Only creating 24 (4 rows * 6 cols) pizzas. It's enough in 2k screen.
     var cols = 6;
     var s = 256;
+    //extract loop invariant
     var basicLeft = (i % cols) * s;
     var numbers = 24;
     for (var i = 0; i < numbers; i++) {
