@@ -422,42 +422,32 @@ var resizePizzas = function (size) {
     changeSliderLabel(size);
 
     // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-    function determineDx(elem, size) {
-        var oldWidth = elem.offsetWidth;
-        var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
-        var oldSize = oldWidth / windowWidth;
-
-        // Changes the slider value to a percent width
-        function sizeSwitcher(size) {
-            switch (size) {
-                case "1":
-                    return 0.25;
-                case "2":
-                    return 0.3333;
-                case "3":
-                    return 0.5;
-                default:
-                    console.log("bug in sizeSwitcher");
-            }
-        }
-
-        var newSize = sizeSwitcher(size);
-        var dx = (newSize - oldSize) * windowWidth;
-
-        return dx;
-    }
 
     // Iterates through pizza elements on the page and changes their widths
     function changePizzaSizes(size) {
-        for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-            var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-            var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-            document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+        var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
+        var length = document.querySelectorAll(".randomPizzaContainer").length;
+        for (var i = 0; i < length; i++) {
+            var pizza = document.querySelectorAll(".randomPizzaContainer")[i];
+            var realsize = 0;
+            switch(size) {
+                case "1":
+                    realsize = 0.25*windowwidth;
+                    break;
+                case "2":
+                    realsize = 0.3333*windowwidth;
+                    break;
+                case "3":
+                    realsize = 0.5*windowwidth;
+                    break;
+                default:
+                    console.log("bug in sizeSwitcher");
+            }
+            pizza.style.width = realsize+"px";
         }
     }
 
     changePizzaSizes(size);
-
     // User Timing API is awesome
     window.performance.mark("mark_end_resize");
     window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
