@@ -429,6 +429,8 @@ var resizePizzas = function (size) {
         var length = document.querySelectorAll(".randomPizzaContainer").length;
         for (var i = 0; i < length; i++) {
             var pizza = document.querySelectorAll(".randomPizzaContainer")[i];
+
+            //Trans size to width ratio
             var realsize = 0;
             switch(size) {
                 case "1":
